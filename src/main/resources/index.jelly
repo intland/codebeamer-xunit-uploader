@@ -1,0 +1,4 @@
+<?jelly escape-by-default='true'?>
+<div>
+    This plugin integrates <a href="http://intland.com/codebeamer-alm-software/">codeBeamer</a> to Jenkins.
+</div>
