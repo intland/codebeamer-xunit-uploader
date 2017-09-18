@@ -27,6 +27,7 @@ import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import jenkins.model.Jenkins;
 import jenkins.tasks.SimpleBuildStep;
+import org.apache.log4j.Logger;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -84,6 +85,8 @@ public class XUnitUploader extends Notifier implements SimpleBuildStep {
     @Extension
     @Symbol("xUnitUploader")
     public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
+
+        private static final Logger logger = Logger.getLogger("xunit-uploader-configuration");
 
         public DescriptorImpl() {
             load();
@@ -144,6 +147,7 @@ public class XUnitUploader extends Notifier implements SimpleBuildStep {
             try {
                 restAdapter.testConnection();
             } catch (CodebeamerNotAccessibleException e) {
+                logger.warn(e);
                 return FormValidation.error(String.format("CodeBeamer instance at %s cannot be reached with this credentials", codebeamerUrl));
             }
             return FormValidation.ok();
