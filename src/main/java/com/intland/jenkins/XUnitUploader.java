@@ -139,14 +139,14 @@ public class XUnitUploader extends Notifier implements SimpleBuildStep {
         private boolean userCanMakeSelection(Item item) {
             if (item == null) {
                 if (!Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER)) {
-                    return true;
+                    return false;
                 }
             } else {
                 if (!item.hasPermission(Item.EXTENDED_READ) && !item.hasPermission(CredentialsProvider.USE_ITEM)) {
-                    return true;
+                    return false;
                 }
             }
-            return false;
+            return true;
         }
     }
 }
