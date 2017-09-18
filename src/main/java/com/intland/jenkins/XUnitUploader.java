@@ -47,22 +47,22 @@ public class XUnitUploader extends Notifier implements SimpleBuildStep {
         this.credentialsId = credentialsId;
     }
 
-    @DataBoundSetter
-    public void setCodebeamerUrl(String codebeamerUrl) {
-        this.codebeamerUrl = codebeamerUrl;
-    }
-
     public String getCodebeamerUrl() {
         return this.codebeamerUrl;
     }
 
     @DataBoundSetter
-    public void setCredentialsId(String credentialsId) {
-        this.credentialsId = credentialsId;
+    public void setCodebeamerUrl(String codebeamerUrl) {
+        this.codebeamerUrl = codebeamerUrl;
     }
 
     public String getCredentialsId() {
         return this.credentialsId;
+    }
+
+    @DataBoundSetter
+    public void setCredentialsId(String credentialsId) {
+        this.credentialsId = credentialsId;
     }
 
     @Override
@@ -76,9 +76,22 @@ public class XUnitUploader extends Notifier implements SimpleBuildStep {
         return BuildStepMonitor.NONE;
     }
 
+    @Override
+    public DescriptorImpl getDescriptor() {
+        return (DescriptorImpl) super.getDescriptor();
+    }
+
     @Extension
     @Symbol("xUnitUploader")
     public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
+
+        public DescriptorImpl() {
+            load();
+        }
+
+        protected DescriptorImpl(Class<? extends XUnitUploader> clazz) {
+            super(clazz);
+        }
 
         @Override
         public String getDisplayName() {
