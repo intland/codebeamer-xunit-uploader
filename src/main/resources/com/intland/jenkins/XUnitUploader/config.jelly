@@ -6,4 +6,19 @@
     <f:entry field="credentialsId" title="${%Credentials}">
         <c:select/>
     </f:entry>
+    <f:entry field="testConfigurationId" title="${%Test Configuration ID}">
+        <f:textbox/>
+    </f:entry>
+    <f:entry field="testCaseTrackerId" title="${%Test Case Tracker ID}">
+        <f:textbox/>
+    </f:entry>
+    <f:entry field="testSetTrackerId" title="${%Test Set Tracker ID}">
+        <f:textbox/>
+    </f:entry>
+    <f:entry field="testRunTrackerId" title="${%Test Run Tracker ID}">
+        <f:textbox/>
+    </f:entry>
+    <f:entry field="testResultsDir" title="${%Test Results Directory}">
+        <f:textbox/>
+    </f:entry>
 </j:jelly>
