@@ -29,8 +29,11 @@ public final class PluginConfiguration {
 
     private Integer testConfigurationId;
     private Integer testCaseTrackerId;
-    private Integer testSetTrackerId;
+    private Integer testCaseId;
+    private Integer releaseId;
     private Integer testRunTrackerId;
+    private String defaultPackagePrefix;
+
 
     private PluginConfiguration() {
 
@@ -51,8 +54,8 @@ public final class PluginConfiguration {
         return testCaseTrackerId;
     }
 
-    public Integer getTestSetTrackerId() {
-        return testSetTrackerId;
+    public Integer getReleaseId() {
+        return releaseId;
     }
 
     public Integer getTestRunTrackerId() {
@@ -63,7 +66,15 @@ public final class PluginConfiguration {
         return codebeamerUrl;
     }
 
-    public StandardUsernamePasswordCredentials getCurrentCredentials() {
+    public Integer getTestCaseId() {
+		return testCaseId;
+	}
+
+	public String getDefaultPackagePrefix() {
+		return defaultPackagePrefix;
+	}
+
+	public StandardUsernamePasswordCredentials getCurrentCredentials() {
         if (item == null || credentialsId == null) {
             return null;
         }
@@ -105,9 +116,19 @@ public final class PluginConfiguration {
         this.testCaseTrackerId = id;
         return this;
     }
+    
+    public PluginConfiguration updateTestCaseId(Integer id) {
+        this.testCaseId = id;
+        return this;
+    }
+    
+    public PluginConfiguration updateDefaultPackagePrefix(String defaultPackagePrefix) {
+        this.defaultPackagePrefix = defaultPackagePrefix;
+        return this;
+    }
 
-    public PluginConfiguration updateTestSetTrackerId(Integer id) {
-        this.testSetTrackerId = id;
+    public PluginConfiguration updateReleaseId(Integer id) {
+        this.releaseId = id;
         return this;
     }
 

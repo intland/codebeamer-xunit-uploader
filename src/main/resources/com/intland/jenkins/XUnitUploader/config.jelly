@@ -12,13 +12,19 @@
     <f:entry field="testCaseTrackerId" title="${%Test Case Tracker ID}">
         <f:textbox/>
     </f:entry>
-    <f:entry field="testSetTrackerId" title="${%Test Set Tracker ID}">
+    <f:entry field="testCaseId" title="${%Test Case ID}">
         <f:textbox/>
     </f:entry>
     <f:entry field="testRunTrackerId" title="${%Test Run Tracker ID}">
         <f:textbox/>
     </f:entry>
+    <f:entry field="releaseId" title="${%Release ID}">
+        <f:textbox/>
+    </f:entry>
     <f:entry field="testResultsDir" title="${%Test Results Directory}">
+        <f:textbox/>
+    </f:entry>
+    <f:entry field="defaultPackagePrefix" title="${%Default Package Prefix}">
         <f:textbox/>
     </f:entry>
 </j:jelly>

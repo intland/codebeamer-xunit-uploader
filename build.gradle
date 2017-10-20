@@ -1,7 +1,6 @@
 plugins {
     id "org.sonarqube" version "2.5"
     id "org.jenkins-ci.jpi" version "0.22.0"
-    id 'findbugs'
 }
 
 group 'org.jenkins-ci.plugins'
