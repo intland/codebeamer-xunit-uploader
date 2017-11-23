@@ -71,9 +71,10 @@ public class XUnitUploader extends Notifier implements SimpleBuildStep {
     private Integer testRunTrackerId;
     private String testResultsDir;
     private String defaultPackagePrefix;
+    private Boolean disabled;
 
     @DataBoundConstructor
-    public XUnitUploader(String codebeamerUrl, String credentialsId, Integer testConfigurationId, Integer testCaseTrackerId, Integer testCaseId, Integer releaseId, Integer testRunTrackerId, String testResultsDir, String defaultPackagePrefix) {
+    public XUnitUploader(String codebeamerUrl, String credentialsId, Integer testConfigurationId, Integer testCaseTrackerId, Integer testCaseId, Integer releaseId, Integer testRunTrackerId, String testResultsDir, String defaultPackagePrefix, Boolean disabled) {
         this.codebeamerUrl = codebeamerUrl;
         this.credentialsId = credentialsId;
         this.testConfigurationId = testConfigurationId;
@@ -83,6 +84,7 @@ public class XUnitUploader extends Notifier implements SimpleBuildStep {
         this.testRunTrackerId = testRunTrackerId;
         this.testResultsDir = testResultsDir;
         this.defaultPackagePrefix = defaultPackagePrefix;
+        this.disabled = disabled;
     }
 
     public Integer getTestConfigurationId() {
@@ -166,8 +168,22 @@ public class XUnitUploader extends Notifier implements SimpleBuildStep {
 		this.defaultPackagePrefix = defaultPackagePrefix;
 	}
 
+	public Boolean getDisabled() {
+		return disabled;
+	}
+
+    @DataBoundSetter
+	public void setDisabled(Boolean disabled) {
+		this.disabled = disabled;
+	}
+
 	@Override
     public void perform(@Nonnull Run<?, ?> run, @Nonnull FilePath filePath, @Nonnull Launcher launcher, @Nonnull TaskListener taskListener) throws InterruptedException, IOException {
+		PrintStream logger = taskListener.getLogger();
+		if (this.disabled != null && this.disabled) {
+			logger.println("XUnitUploader Plugin is disabled!");
+			return;
+		}
         PluginConfiguration.getInstance()
                 .updateItem(run.getParent())
                 .updateCodebeamerUrl(this.codebeamerUrl)
@@ -185,7 +201,6 @@ public class XUnitUploader extends Notifier implements SimpleBuildStep {
                 .withDefaultPackagePrefix(defaultPackagePrefix)
                 .withBuildIdentifier(String.format("%s #%s", run.getParent().getName(), run.getNumber()));
 
-        PrintStream logger = taskListener.getLogger();
         logger.println("Hello XUnitUploader Plugin!");
 
         final String testResults = run.getEnvironment(taskListener).expand(this.testResultsDir);
@@ -374,16 +389,18 @@ public class XUnitUploader extends Notifier implements SimpleBuildStep {
             return checkTrackerExistsAndType(Integer.valueOf(value), new TestRun());
         }
 
-        @SuppressWarnings("rawtypes")
-		public FormValidation doCheckTestResultsDir(@AncestorInPath AbstractProject project, @QueryParameter String value) throws IOException {
-            if (project == null) {
-                return FormValidation.ok();
+		public FormValidation doCheckTestResultsDir(@QueryParameter String value) throws IOException {
+			if (value.isEmpty()) {
+                return FormValidation.error(FIELD_IS_MANDATORY);
             }
-            return FilePath.validateFileMask(project.getSomeWorkspace(), value);
+            return FormValidation.ok();
+        }
+		
+		public FormValidation doCheckDisabled(@QueryParameter String value) throws IOException {
+            return FormValidation.ok();
         }
         
-        @SuppressWarnings("rawtypes")
-		public FormValidation doCheckDefaultPackagePrefix(@AncestorInPath AbstractProject project, @QueryParameter String value) throws IOException {
+		public FormValidation doCheckDefaultPackagePrefix(@QueryParameter String value) throws IOException {
             return FormValidation.ok();
         }
 
