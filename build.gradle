@@ -9,7 +9,7 @@ description = 'This Plugin uploads XUnit results to CodeBeamer'
 jenkinsPlugin {
     coreVersion = '2.46.3'
     displayName = 'CodeBeamer XUnit Uploader'
-    shortName = 'xunitUploader'
+    shortName = 'codebeamer-xunit-uploader'
 
     compatibleSinceVersion = '1.0-SNAPSHOT'
 
